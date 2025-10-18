@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
-# Simple hardcoded credentials
 USERNAME = "admin"
 PASSWORD = "1234"
 
@@ -20,5 +19,9 @@ def login():
     else:
         return render_template('login.html', message="Invalid username or password")
 
-if __name__ == '__main__':
+# This is important for Vercel
+def handler(event, context):
+    return app(event, context)
+
+if __name__ == "__main__":
     app.run(debug=True)
