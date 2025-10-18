@@ -19,5 +19,5 @@ def login():
     else:
         return render_template('login.html', message="Invalid username or password")
 
-def handler(request, context):
-    return app(request, context)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
