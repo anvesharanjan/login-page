@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from vercel_wsgi import handle_wsgi
 
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
@@ -19,9 +20,6 @@ def login():
     else:
         return render_template('login.html', message="Invalid username or password")
 
-# This is important for Vercel
-def handler(event, context):
-    return app(event, context)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+# This is for Vercel serverless
+def handler(request, context):
+    return handle_wsgi(app, request, context)
